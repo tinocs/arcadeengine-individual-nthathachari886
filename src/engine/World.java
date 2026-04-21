@@ -153,11 +153,11 @@ public abstract class World extends javafx.scene.layout.Pane{
 	}
 	
 	public boolean isKeyPressed(javafx.scene.input.KeyCode code) {
-		
+		// TO_DO
+		return false;
 	}
 	
 	public abstract void onDimensionsInitialized();
-	}
 
 	
 }
