@@ -6,6 +6,8 @@ import javafx.scene.input.MouseEvent;
 
 public class BallWorld extends World{
 	
+	private Score score;
+	
 	public BallWorld() {
 		super();
 		setWidth(500);
@@ -46,6 +48,11 @@ public class BallWorld extends World{
 			}
 		}
 		
+		score = new Score();
+		score.setX(10);
+		score.setY(score.getFont().getSize()+10);
+		this.getChildren().add(score);
+		
 		this.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -60,6 +67,10 @@ public class BallWorld extends World{
 		});
 		
 		
+	}
+	
+	public Score getScore() {
+		return score;
 	}
 
 }

@@ -32,6 +32,8 @@ public class Ball extends Actor{
 		} else if(getY()+getHeight() >= getWorld().getHeight()) {
 			dy = -dy;
 			setY(getWorld().getHeight()-getHeight());
+			BallWorld bw = (BallWorld)getWorld();
+			bw.getScore().setValue(bw.getScore().getValue()-1000);
 		}
 		
 		// bounce off left and right
@@ -76,7 +78,8 @@ public class Ball extends Actor{
 		// BRICK
 		Brick c = (Brick)getOneIntersectingObject(Brick.class);
 		if(c!=null) {
-			
+			BallWorld bw = (BallWorld)getWorld();
+			bw.getScore().setValue(bw.getScore().getValue()+100);
 			// bounce off top and bottom
 			if(getX()>c.getX() && getX()<c.getX()+c.getWidth()) {
 				if(getY() <= c.getY()) {
