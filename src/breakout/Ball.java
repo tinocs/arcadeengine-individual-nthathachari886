@@ -13,8 +13,8 @@ public class Ball extends Actor{
 		Image img = new Image (path);
 		setImage(img);
 		
-		dx = 1;
-		dy = 1;
+		dx = 4;
+		dy = 4;
 		System.out.println(getWidth()+", "+getHeight());
 	}
 
