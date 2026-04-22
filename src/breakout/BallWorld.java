@@ -31,6 +31,21 @@ public class BallWorld extends World{
 		p.setX(getWidth()/2);
 		p.setY(getHeight()*3/5);
 		
+		// Brick Testing
+		int rMax = 6;
+		int cMax = 10;
+		int space = 2;
+		for(int r=0; r<rMax; r++) {
+			for(int c=0; c<cMax; c++) {
+				System.out.println(c);
+				Brick x = new Brick();
+				add(x);
+				x.setX(getWidth()/2.0-(cMax*x.getWidth()+(cMax-1)*space)/2.0 + r*x.getWidth()+r*space);
+				x.setY(getHeight()/4.0-(rMax*x.getHeight()+(rMax-1)*space)/2.0 + c*x.getHeight()+c*space);
+				System.out.println(cMax*r+c);
+			}
+		}
+		
 		this.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -43,6 +58,8 @@ public class BallWorld extends World{
 				}
 			}
 		});
+		
+		
 	}
 
 }

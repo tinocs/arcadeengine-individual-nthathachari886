@@ -13,8 +13,8 @@ public class Ball extends Actor{
 		Image img = new Image (path);
 		setImage(img);
 		
-		dx = 4;
-		dy = 4;
+		dx = 2;
+		dy = 2;
 		System.out.println(getWidth()+", "+getHeight());
 	}
 
@@ -48,21 +48,57 @@ public class Ball extends Actor{
 		if(p!=null) {
 			
 			// bounce off top and bottom
-			if(getY() <= p.getY()) {
+			if(getX()>p.getX() && getX()<p.getX()+p.getWidth()) {
+				if(getY() <= p.getY()) {
+					dy = -dy;
+					setY(p.getY()-getHeight());
+				} else if(getY() > p.getY()) {
+					dy = -dy;
+					setY(p.getY()+p.getHeight());
+				}
+			}else if(getY()>p.getY() && getY()<p.getY()+p.getHeight()) {
+			
+				// bounce off left and right
+				if(getX() <= p.getX()) {
+					dx = -dx;
+					setX(p.getX()-getWidth());
+				}else if(getX() >p.getX()) {
+					dx = -dx;
+					setX(p.getX()+p.getWidth());
+				}
+			}else {
+				dx = -dx;
 				dy = -dy;
-				setY(p.getY()-getHeight());
-			} else if(getY() > p.getY()) {
-				dy = -dy;
-				setY(p.getY()+p.getHeight());
 			}
 			
-			// bounce off left and right
-			if(getX() <= p.getX()) {
+		}
+		
+		// BRICK
+		Brick c = (Brick)getOneIntersectingObject(Brick.class);
+		if(c!=null) {
+			
+			// bounce off top and bottom
+			if(getX()>c.getX() && getX()<c.getX()+c.getWidth()) {
+				if(getY() <= c.getY()) {
+					dy = -dy;
+					setY(c.getY()-getHeight());
+				} else if(getY() > c.getY()) {
+					dy = -dy;
+					setY(c.getY()+c.getHeight());
+				}
+			}else if(getY()>c.getY() && getY()<c.getY()+c.getHeight()) {
+			
+				// bounce off left and right
+				if(getX() <= c.getX()) {
+					dx = -dx;
+					setX(c.getX()-getWidth());
+				}else if(getX() >c.getX()) {
+					dx = -dx;
+					setX(c.getX()+c.getWidth());
+				}
+			}else {
 				dx = -dx;
-				setX(p.getX()-getWidth());
-			}else if(getX() >p.getX()) {
-				dx = -dx;
-				setX(p.getX()+p.getWidth());
+				dy = -dy;
 			}
 			
 		}
