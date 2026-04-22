@@ -14,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+//FIX KEYS STUFF
+
 public abstract class World extends javafx.scene.layout.Pane{
 	
 	private AnimationTimer timer;
@@ -21,6 +23,7 @@ public abstract class World extends javafx.scene.layout.Pane{
 	private Set<KeyCode> keysCurrentlyPressed;
 	private boolean widthHasBeenSet;
 	private boolean heightHasBeenSet;
+	private boolean initialized = false;
 	
 	public World() {
 		widthHasBeenSet = false;
@@ -35,8 +38,10 @@ public abstract class World extends javafx.scene.layout.Pane{
 				if(newValue.intValue() > 0) {
 					widthHasBeenSet = true;
 				}
-				if(widthHasBeenSet && heightHasBeenSet) {
+				if(widthHasBeenSet && heightHasBeenSet && !initialized) {
+					initialized = true;
 					onDimensionsInitialized();
+					System.out.println("I GOT INITIALIZED!");
 				}
 			}
 			
@@ -49,8 +54,11 @@ public abstract class World extends javafx.scene.layout.Pane{
 				if(newValue.intValue() > 0) {
 					heightHasBeenSet = true;
 				}
-				if(widthHasBeenSet && heightHasBeenSet) {
+				if(widthHasBeenSet && heightHasBeenSet && !initialized) {
+					initialized = true;
 					onDimensionsInitialized();
+					
+					System.out.println("I GOT INITIALIZED!");
 				}
 			}
 			
@@ -65,12 +73,13 @@ public abstract class World extends javafx.scene.layout.Pane{
 			
 		});
 		
+		//requestFocus();
 		setOnKeyPressed(new EventHandler<KeyEvent>() {
+			
 
 			@Override
 			public void handle(KeyEvent e) {
 				keysCurrentlyPressed.add(e.getCode());
-				
 			}
 			
 		});
@@ -89,11 +98,10 @@ public abstract class World extends javafx.scene.layout.Pane{
 
 			@Override
 			public void handle(long now) {
-				act(now);
-				
+				act(now);	
 				for(Actor n : getObjects(Actor.class)) {
 					if(n.getWorld() != null) {
-						act(now);
+						n.act(now);
 					}
 				}
 				
@@ -115,11 +123,12 @@ public abstract class World extends javafx.scene.layout.Pane{
 	}
 	
 	public boolean isStopped() {
-		return timerIsRunning;
+		return !timerIsRunning;
 	}
 	
 	public void add(Actor actor) {
 		getChildren().add(actor);
+		actor.addedToWorld();
 	}
 	
 	public void remove(Actor actor) {
@@ -153,8 +162,8 @@ public abstract class World extends javafx.scene.layout.Pane{
 	}
 	
 	public boolean isKeyPressed(javafx.scene.input.KeyCode code) {
-		// TO_DO
-		return false;
+		System.out.println(keysCurrentlyPressed);
+		return keysCurrentlyPressed.contains(code);
 	}
 	
 	public abstract void onDimensionsInitialized();

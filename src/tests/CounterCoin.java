@@ -10,10 +10,4 @@ public class CounterCoin extends TestActor {
 		setImage(COIN_IMAGE);
 	}
 
-	@Override
-	public void act(long now) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

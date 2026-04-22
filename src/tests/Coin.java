@@ -11,10 +11,4 @@ public class Coin extends TestActor {
 		setFitWidth(40);
 		setFitHeight(40);
 	}
-
-	@Override
-	public void act(long now) {
-		// TODO Auto-generated method stub
-		
-	}
 }

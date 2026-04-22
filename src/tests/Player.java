@@ -19,16 +19,5 @@ public class Player extends TestActor {
 	public String getName() {
 		return name;
 	}
-
-	@Override
-	public String toString() {
-		return "Player [name=" + name + "]";
-	}
-
-	@Override
-	public void act(long now) {
-		// TODO Auto-generated method stub
-		
-	}
     
 }
