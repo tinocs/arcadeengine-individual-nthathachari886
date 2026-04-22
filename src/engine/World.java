@@ -58,7 +58,6 @@ public abstract class World extends javafx.scene.layout.Pane{
 					initialized = true;
 					onDimensionsInitialized();
 					
-					System.out.println("I GOT INITIALIZED!");
 				}
 			}
 			
@@ -162,7 +161,7 @@ public abstract class World extends javafx.scene.layout.Pane{
 	}
 	
 	public boolean isKeyPressed(javafx.scene.input.KeyCode code) {
-		System.out.println(keysCurrentlyPressed);
+		//System.out.println(keysCurrentlyPressed);
 		return keysCurrentlyPressed.contains(code);
 	}
 	
