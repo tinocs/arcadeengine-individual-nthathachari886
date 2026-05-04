@@ -15,7 +15,6 @@ public class Ball extends Actor{
 		
 		dx = 2;
 		dy = 2;
-		System.out.println(getWidth()+", "+getHeight());
 	}
 
 	@Override
@@ -103,6 +102,7 @@ public class Ball extends Actor{
 				dx = -dx;
 				dy = -dy;
 			}
+			getWorld().remove(c);
 			
 		}
 		

@@ -4,9 +4,15 @@ import engine.World;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
+
 public class BallWorld extends World{
 	
 	private Score score;
+	private BooleanProperty gameOver = new SimpleBooleanProperty(false);
+
 	
 	public BallWorld() {
 		super();
@@ -14,9 +20,17 @@ public class BallWorld extends World{
 		setHeight(700);
 	}
 	
+	public BooleanProperty gameOverProperty() {
+	    return gameOver;
+	}
+	
 	@Override
 	public void act(long now) {
-		
+		if(getObjects(Brick.class).size()==0) {
+			gameOver.set(true);
+			System.out.println("OVER");
+			stop();
+		}
 	}
 
 	@Override
@@ -34,6 +48,7 @@ public class BallWorld extends World{
 		p.setY(getHeight()*3/5);
 		
 		// Brick Testing
+		/*
 		int rMax = 6;
 		int cMax = 10;
 		int space = 2;
@@ -47,6 +62,11 @@ public class BallWorld extends World{
 				System.out.println(cMax*r+c);
 			}
 		}
+		*/
+		Brick x = new Brick();
+		add(x);
+		x.setX(0);
+		x.setY(0);
 		
 		score = new Score();
 		score.setX(10);
