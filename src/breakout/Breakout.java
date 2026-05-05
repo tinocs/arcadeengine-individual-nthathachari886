@@ -51,6 +51,10 @@ public class Breakout extends Application{
 	
 	
 	public Scene goToHomeScreen(BallWorld world) {
+		// SETUP
+		s.setHeight(world.getOriginalHeight());
+		s.setWidth(world.getOriginalWidth());
+		
 		// TITLE
 		VBox screen = new VBox();
 		
@@ -89,8 +93,8 @@ public class Breakout extends Application{
 				world = new BallWorld(s);
 				world.gameOverProperty().addListener((obs, oldVal, newVal) -> {
 				    if (newVal) {
-				        //s.setScene(goToHomeScreen(world));
-				    	world.setLevel(world.getLevel()+1);
+				        s.setScene(goToHomeScreen(world));
+				    	//world.setLevel(world.getLevel()+1);
 				    }
 				});
 				

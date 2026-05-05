@@ -44,14 +44,25 @@ public class BallWorld extends World{
 	@Override
 	public void act(long now) {
 		if(getObjects(Brick.class).size()==0) {
+			//gameOver.set(true);
+			
 			level++;
-			if(level>1) {
+			if(level>2) {
 				gameOver.set(true);
 			}else {
 				//System.out.println("OVER");
 				setLevel(level);
 			}
+			
 		}
+	}
+	
+	public int getOriginalHeight() {
+		return ORIGINAL_HEIGHT;
+	}
+	
+	public int getOriginalWidth() {
+		return ORIGINAL_WIDTH;
 	}
 
 	@Override
