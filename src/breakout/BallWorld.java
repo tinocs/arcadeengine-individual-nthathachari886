@@ -47,7 +47,7 @@ public class BallWorld extends World{
 			//gameOver.set(true);
 			
 			level++;
-			if(level>2) {
+			if(level>1) {
 				gameOver.set(true);
 			}else {
 				//System.out.println("OVER");

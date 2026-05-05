@@ -25,6 +25,7 @@ public class Breakout extends Application{
 	Scene h;
 	BallWorld world;
 	Button play;
+	Button homeButton;
 	
 	//int level = 0;	
 	
@@ -77,6 +78,33 @@ public class Breakout extends Application{
 		return home;
 	}
 	
+	public Scene goToOverScreen(BallWorld world) {
+		// SETUP
+		s.setHeight(world.getOriginalHeight());
+		s.setWidth(world.getOriginalWidth());
+		
+		// TITLE
+		VBox screen = new VBox();
+		
+		ImageView t = new ImageView();
+		String path = getClass().getClassLoader().getResource("breakoutresources/gameOver.png").toString();
+		Image img = new Image (path);
+		t.setImage(img);
+		
+		// PLAY BUTTON
+		MyButtonHandler buttonHandler = new MyButtonHandler();
+		homeButton = new Button("Back to Home");
+		homeButton.setOnAction(buttonHandler);
+		
+		// ADDING
+		screen.getChildren().addAll(t, homeButton);
+		
+		Scene home = new Scene(screen, world.getWidth(), world.getHeight());
+		screen.setAlignment(Pos.TOP_CENTER);
+		
+		return home;
+	}
+	
 	/*
 	public void loadLevel() {
 		world.setLevel(level);
@@ -93,7 +121,7 @@ public class Breakout extends Application{
 				world = new BallWorld(s);
 				world.gameOverProperty().addListener((obs, oldVal, newVal) -> {
 				    if (newVal) {
-				        s.setScene(goToHomeScreen(world));
+				        s.setScene(goToOverScreen(world));
 				    	//world.setLevel(world.getLevel()+1);
 				    }
 				});
@@ -104,6 +132,8 @@ public class Breakout extends Application{
 				
 				s.setScene(scene);
 				world.start();
+			}else if(e.getSource() == homeButton) {
+				s.setScene(goToHomeScreen(world));
 			}
 			
 		}
