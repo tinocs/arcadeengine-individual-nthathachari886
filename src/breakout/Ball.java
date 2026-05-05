@@ -13,8 +13,8 @@ public class Ball extends Actor{
 		Image img = new Image (path);
 		setImage(img);
 		
-		dx = 2;
-		dy = 2;
+		dx = 7;
+		dy = 7;
 	}
 
 	@Override

@@ -1,5 +1,8 @@
 package breakout;
 
+import java.io.File;
+import java.util.Scanner;
+
 import engine.World;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
@@ -18,18 +21,16 @@ import javafx.stage.Stage;
 
 public class Breakout extends Application{
 	
-	Button play;
 	static Stage s;
-	BallWorld world;
 	Scene h;
+	BallWorld world;
+	Button play;
 	
-	int level = -1;	
+	//int level = 0;	
 	
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
-
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -38,9 +39,8 @@ public class Breakout extends Application{
 		s.setTitle("Breakout");
 		
 		// LEVEL
+		world = new BallWorld(s);
 		BorderPane root = new BorderPane();
-		world = new BallWorld();
-		
 		root.setCenter(world);
 				
 		h = goToHomeScreen(world);
@@ -72,6 +72,12 @@ public class Breakout extends Application{
 		
 		return home;
 	}
+	
+	/*
+	public void loadLevel() {
+		world.setLevel(level);
+	}
+	*/
 
 	
 	private class MyButtonHandler implements EventHandler<ActionEvent>{
@@ -80,10 +86,11 @@ public class Breakout extends Application{
 		public void handle(ActionEvent e) {
 			if(e.getSource() == play) {
 				BorderPane root = new BorderPane();
-				world = new BallWorld();
+				world = new BallWorld(s);
 				world.gameOverProperty().addListener((obs, oldVal, newVal) -> {
 				    if (newVal) {
-				        s.setScene(goToHomeScreen(world));
+				        //s.setScene(goToHomeScreen(world));
+				    	world.setLevel(world.getLevel()+1);
 				    }
 				});
 				
