@@ -3,23 +3,15 @@ package breakout;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class Score extends Text{
+public class Lives extends Text{
 	
 	private int value;
 	
-	public Score() {
+	public Lives() {
 		super();
-		value = 0;
+		value = 1000;
 		setFont(new Font(20));
 		updateDisplay();
-	}
-	
-	public void updateDisplay() {
-		setText("Score: "+value);
-	}
-	
-	public int getValue() {
-		return value;
 	}
 	
 	public void setValue(int v) {
@@ -27,8 +19,21 @@ public class Score extends Text{
 		updateDisplay();
 	}
 	
+	public int getValue() {
+		return value;
+	}
+	
+	public void increment() {
+		this.value--;
+		updateDisplay();
+	}
+	
+	public void updateDisplay() {
+		setText("Lives: "+value);
+	}
+	
 	public String toString() {
 		return ""+value;
 	}
-
+	
 }

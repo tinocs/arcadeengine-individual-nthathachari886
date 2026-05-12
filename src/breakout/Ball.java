@@ -19,6 +19,7 @@ public class Ball extends Actor{
 
 	@Override
 	public void act(long now) {
+
 		move(dx, dy);
 		
 		// 		COLLISIONS
@@ -32,7 +33,7 @@ public class Ball extends Actor{
 			dy = -dy;
 			setY(getWorld().getHeight()-getHeight());
 			BallWorld bw = (BallWorld)getWorld();
-			bw.getScore().setValue(bw.getScore().getValue()-1000);
+			bw.getLives().increment();
 		}
 		
 		// bounce off left and right

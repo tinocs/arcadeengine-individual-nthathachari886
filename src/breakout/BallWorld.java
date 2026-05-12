@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 public class BallWorld extends World{
 	
 	private Score score;
+	private Lives lives;
 	private BooleanProperty gameOver = new SimpleBooleanProperty(false);
 	int level = 1;
 	
@@ -43,11 +44,14 @@ public class BallWorld extends World{
 	
 	@Override
 	public void act(long now) {
+		if(lives.getValue() ==0) {
+			gameOver.set(true);
+		}
 		if(getObjects(Brick.class).size()==0) {
 			//gameOver.set(true);
 			
 			level++;
-			if(level>1) {
+			if(level>2) {
 				gameOver.set(true);
 			}else {
 				//System.out.println("OVER");
@@ -82,6 +86,11 @@ public class BallWorld extends World{
 		score.setX(10);
 		score.setY(score.getFont().getSize()+10);
 		this.getChildren().add(score);
+		
+		lives = new Lives();
+		lives.setX(300);
+		lives.setY(lives.getFont().getSize()+10);
+		this.getChildren().add(lives);
 		
 		this.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
@@ -154,6 +163,10 @@ public class BallWorld extends World{
 	
 	public Score getScore() {
 		return score;
+	}
+	
+	public Lives getLives() {
+		return lives;
 	}
 
 }
