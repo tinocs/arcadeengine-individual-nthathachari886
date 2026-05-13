@@ -2,24 +2,42 @@ package breakout;
 
 import engine.Actor;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 
 public class Ball extends Actor{
 	
 	private double dx;
 	private double dy;
 	
+	private final double DX = 7;
+	private final double DY = -7;
+	
+	private boolean isPaused;
+	
 	public Ball() {
 		String path = getClass().getClassLoader().getResource("breakoutresources/ball.png").toString();
 		Image img = new Image (path);
 		setImage(img);
 		
-		dx = 7;
-		dy = 7;
+		dx = 0;
+		dy = 0;
+		
+		isPaused = true;
 	}
 
 	@Override
 	public void act(long now) {
-
+		if(getWorld().isKeyPressed(KeyCode.SPACE)) {
+			isPaused = !isPaused;
+		}
+		if(isPaused) {
+			dx = 0;
+			dy = 0;
+		}else {
+			dx = DX;
+			dy = DY;
+		}
+		
 		move(dx, dy);
 		
 		// 		COLLISIONS
@@ -107,6 +125,14 @@ public class Ball extends Actor{
 			
 		}
 		
+	}
+	
+	public void setPaused(boolean x) {
+		isPaused = x;
+	}
+	
+	public boolean getPaused() {
+		return isPaused;
 	}
 
 }

@@ -71,17 +71,17 @@ public class BallWorld extends World{
 
 	@Override
 	public void onDimensionsInitialized() {
-		b = new Ball();
-		add(b);
-		b.setX(getWidth()/2);
-		b.setY(getHeight()/2);
 		
 		p = new Paddle();
 		add(p);
 		p.setX(getWidth()/2);
 		p.setY(getHeight()*3/5);
-
 		
+		b = new Ball();
+		add(b);
+		b.setX(getWidth()/2);
+		b.setY(p.getY() - b.getHeight());
+
 		score = new Score();
 		score.setX(10);
 		score.setY(score.getFont().getSize()+10);
