@@ -9,7 +9,7 @@ public class Lives extends Text{
 	
 	public Lives() {
 		super();
-		value = 1000;
+		value = 100;
 		setFont(new Font(20));
 		updateDisplay();
 	}

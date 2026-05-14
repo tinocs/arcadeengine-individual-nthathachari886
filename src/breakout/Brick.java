@@ -1,4 +1,5 @@
 package breakout;
+import javafx.animation.Animation;
 
 import engine.Actor;
 import javafx.scene.image.Image;
@@ -22,6 +23,7 @@ public class Brick extends Actor{
 			setImage(img);
 		}
 	}
+
 
 	@Override
 	public void act(long now) {

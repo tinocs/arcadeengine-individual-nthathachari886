@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+import engine.Sound;
 import engine.World;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -27,7 +28,11 @@ public class BallWorld extends World{
 	double spacing = 4;
 	final int ORIGINAL_HEIGHT = 700;
 	final int ORIGINAL_WIDTH = 500;
-
+	
+	
+	Sound gameLost = new Sound("/breakoutresources/game_lost.wav");
+	Sound gameWon = new Sound("/breakoutresources/game_won.wav");
+	
 	
 	public BallWorld(Stage s) {
 		super();
@@ -45,6 +50,13 @@ public class BallWorld extends World{
 	@Override
 	public void act(long now) {
 		if(lives.getValue() ==0) {
+			if(!gameOver.getValue()) {
+				gameLost.play();
+			}
+			Ball b = getObjects(Ball.class).get(0);
+			b.reset();
+			b.setMove(0,  0);
+			
 			gameOver.set(true);
 		}
 		if(getObjects(Brick.class).size()==0) {
@@ -52,6 +64,9 @@ public class BallWorld extends World{
 			
 			level++;
 			if(level>2) {
+				if(!gameOver.getValue()) {
+					gameWon.play();
+				}
 				gameOver.set(true);
 			}else {
 				//System.out.println("OVER");

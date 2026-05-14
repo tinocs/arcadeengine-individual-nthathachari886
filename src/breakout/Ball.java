@@ -1,8 +1,17 @@
 package breakout;
 
+
 import engine.Actor;
+import engine.Sound;
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
+import javafx.util.Duration;
+
 
 public class Ball extends Actor{
 	
@@ -13,6 +22,11 @@ public class Ball extends Actor{
 	private final double DY = -7;
 	
 	private boolean isPaused;
+	
+	Sound ballBounce = new Sound("/breakoutresources/ball_bounce.wav");
+	Sound brickHit = new Sound("/breakoutresources/brick_hit.wav");
+	Sound loseLife = new Sound("/breakoutresources/lose_life.wav");
+	
 	
 	public Ball() {
 		String path = getClass().getClassLoader().getResource("breakoutresources/ball.png").toString();
@@ -50,20 +64,24 @@ public class Ball extends Actor{
 		if(getY() <=0) {
 			dy = -dy;
 			setY(0);
+			ballBounce.play();
 		} else if(getY()+getHeight() >= getWorld().getHeight()) {
 			dy = -dy;
 			setY(getWorld().getHeight()-getHeight());
 			BallWorld bw = (BallWorld)getWorld();
 			bw.getLives().increment();
+			loseLife.play();
 		}
 		
 		// bounce off left and right
 		if(getX() <=0) {
 			dx = -dx;
 			setX(0);
+			ballBounce.play();
 		}else if(getX()+getWidth() >= getWorld().getWidth()) {
 			dx = -dx;
 			setX(getWorld().getWidth()-getWidth());
+			ballBounce.play();
 		}
 		
 		// PADDLE
@@ -124,7 +142,19 @@ public class Ball extends Actor{
 				dx = -dx;
 				dy = -dy;
 			}
-			getWorld().remove(c);
+			brickHit.play();
+			FadeTransition fd = new FadeTransition(Duration.millis(300));
+			fd.setNode(c);
+			fd.setFromValue(1.0);
+		    fd.setToValue(0);
+		    //fd.setCycleCount();
+			fd.play();
+			fd.setOnFinished(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent e) {
+					getWorld().remove(c);
+				}
+			});
 			
 		}
 		
@@ -146,5 +176,19 @@ public class Ball extends Actor{
 		dx = 0;
 		dy = 0;
 	}
+	
+	public void setMove(double x, double y) {
+		dx = x;
+		dy = y;
+	}
+	
+	public double getDx() {
+		return dx;
+	}
+	
+	public double getDy() {
+		return dy;
+	}
+
 
 }
