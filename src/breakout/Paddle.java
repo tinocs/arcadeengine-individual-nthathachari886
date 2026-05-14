@@ -13,7 +13,7 @@ public class Paddle extends Actor{
 		Image img = new Image (path);
 		setImage(img);
 		
-		dx = 3;
+		dx = 10;
 	}
 
 	@Override

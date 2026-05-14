@@ -27,15 +27,18 @@ public class Ball extends Actor{
 
 	@Override
 	public void act(long now) {
-		if(getWorld().isKeyPressed(KeyCode.SPACE)) {
-			isPaused = !isPaused;
-		}
 		if(isPaused) {
-			dx = 0;
-			dy = 0;
-		}else {
-			dx = DX;
-			dy = DY;
+			reset();
+			if(getWorld().isKeyPressed(KeyCode.SPACE)) {
+				isPaused = false;
+				if(isPaused) {
+					dx = 0;
+					dy = 0;
+				}else {
+					dx = DX;
+					dy = DY;
+				}
+			}
 		}
 		
 		move(dx, dy);
@@ -133,6 +136,15 @@ public class Ball extends Actor{
 	
 	public boolean getPaused() {
 		return isPaused;
+	}
+	
+	public void reset() {
+		BallWorld bw = (BallWorld)getWorld();
+		Paddle p = bw.getObjects(Paddle.class).get(0);
+		setX( p.getX() + p.getWidth()/2 - getWidth()/2);
+		setY(p.getY()-getHeight());
+		dx = 0;
+		dy = 0;
 	}
 
 }

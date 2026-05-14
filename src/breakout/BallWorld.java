@@ -81,6 +81,7 @@ public class BallWorld extends World{
 		add(b);
 		b.setX(getWidth()/2);
 		b.setY(p.getY() - b.getHeight());
+		b.setPaused(true);
 
 		score = new Score();
 		score.setX(10);
@@ -150,11 +151,14 @@ public class BallWorld extends World{
 			
 			b.setX(getWidth()/2);
 			b.setY(getHeight()/2);
+			b.reset();
+			b.setPaused(true);
 			
 			p.setX(getWidth()/2);
 			p.setY(getHeight()*3/5);
 			
 			sc.close();
+			
 			
 		}catch(IOException e) {
 			System.out.println("ERROR: "+e.getMessage());
