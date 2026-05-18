@@ -40,6 +40,7 @@ public class BallWorld extends World{
 		setHeight(700);
 		level = 1;
 		stage = s;
+		System.out.println(stage);
 		//spacing = 10;
 	}
 	
@@ -67,6 +68,10 @@ public class BallWorld extends World{
 				if(!gameOver.getValue()) {
 					gameWon.play();
 				}
+				Ball b = getObjects(Ball.class).get(0);
+				b.reset();
+				b.setMove(0,  0);
+				
 				gameOver.set(true);
 			}else {
 				//System.out.println("OVER");
@@ -86,17 +91,6 @@ public class BallWorld extends World{
 
 	@Override
 	public void onDimensionsInitialized() {
-		
-		p = new Paddle();
-		add(p);
-		p.setX(getWidth()/2);
-		p.setY(getHeight()*3/5);
-		
-		b = new Ball();
-		add(b);
-		b.setX(getWidth()/2);
-		b.setY(p.getY() - b.getHeight());
-		b.setPaused(true);
 
 		score = new Score();
 		score.setX(10);
@@ -107,6 +101,8 @@ public class BallWorld extends World{
 		lives.setX(300);
 		lives.setY(lives.getFont().getSize()+10);
 		this.getChildren().add(lives);
+		
+		setLevel(getLevel());
 		
 		this.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
@@ -121,7 +117,8 @@ public class BallWorld extends World{
 			}
 		});
 		
-		setLevel(getLevel());
+		//setLevel(getLevel());
+		
 	}
 	
 	public int getLevel() {
@@ -134,6 +131,9 @@ public class BallWorld extends World{
 		try {
 			File f = new File(filename);
 			Scanner sc = new Scanner(f);
+			
+			double paddlePlacement = sc.nextDouble();
+			System.out.println(paddlePlacement);
 			
 			int rows = sc.nextInt();
 			int cols = sc.nextInt();
@@ -161,16 +161,22 @@ public class BallWorld extends World{
 			setHeight(ORIGINAL_HEIGHT);
 			setWidth(ORIGINAL_WIDTH);
 			
+			//System.out.println(stage);
 			stage.setHeight(ORIGINAL_HEIGHT);
 			stage.setWidth(ORIGINAL_WIDTH);
 			
+			p = new Paddle();
+			add(p);
+			p.setX(getWidth()/2);
+			p.setY(getHeight()*paddlePlacement);
+			
+			b = new Ball();
+			add(b);
 			b.setX(getWidth()/2);
-			b.setY(getHeight()/2);
+			b.setY(p.getY() - b.getHeight());
 			b.reset();
 			b.setPaused(true);
 			
-			p.setX(getWidth()/2);
-			p.setY(getHeight()*3/5);
 			
 			sc.close();
 			

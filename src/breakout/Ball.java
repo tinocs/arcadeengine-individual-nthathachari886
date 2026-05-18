@@ -143,11 +143,11 @@ public class Ball extends Actor{
 				dy = -dy;
 			}
 			brickHit.play();
-			FadeTransition fd = new FadeTransition(Duration.millis(300));
+			FadeTransition fd = new FadeTransition(Duration.millis(100));
 			fd.setNode(c);
 			fd.setFromValue(1.0);
 		    fd.setToValue(0);
-		    //fd.setCycleCount();
+		    fd.setCycleCount(1);
 			fd.play();
 			fd.setOnFinished(new EventHandler<ActionEvent>() {
 				@Override
