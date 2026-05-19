@@ -36,11 +36,10 @@ public class BallWorld extends World{
 	
 	public BallWorld(Stage s) {
 		super();
-		setWidth(500);
-		setHeight(700);
-		level = 1;
 		stage = s;
-		System.out.println(stage);
+		setWidth(ORIGINAL_WIDTH);
+		setHeight(ORIGINAL_HEIGHT);
+		level = 1;
 		//spacing = 10;
 	}
 	
@@ -91,7 +90,6 @@ public class BallWorld extends World{
 
 	@Override
 	public void onDimensionsInitialized() {
-
 		score = new Score();
 		score.setX(10);
 		score.setY(score.getFont().getSize()+10);
@@ -126,14 +124,23 @@ public class BallWorld extends World{
 	}
 	
 	public void setLevel(int l) {
+		
+		for(int i=0; i<getObjects(Paddle.class).size(); i++) {
+			this.remove(getObjects(Paddle.class).get(0));
+		}
+		
+		for(int i=0; i<getObjects(Ball.class).size(); i++) {
+			this.remove(getObjects(Ball.class).get(0));
+		}
+		
 		level = l;
 		String filename = "breakout-lvl-"+level+".txt";
 		try {
 			File f = new File(filename);
 			Scanner sc = new Scanner(f);
 			
-			double paddlePlacement = sc.nextDouble();
-			System.out.println(paddlePlacement);
+			//double paddlePlacement = sc.nextDouble();
+			//System.out.println(paddlePlacement);
 			
 			int rows = sc.nextInt();
 			int cols = sc.nextInt();
@@ -161,14 +168,13 @@ public class BallWorld extends World{
 			setHeight(ORIGINAL_HEIGHT);
 			setWidth(ORIGINAL_WIDTH);
 			
-			//System.out.println(stage);
 			stage.setHeight(ORIGINAL_HEIGHT);
 			stage.setWidth(ORIGINAL_WIDTH);
 			
 			p = new Paddle();
 			add(p);
 			p.setX(getWidth()/2);
-			p.setY(getHeight()*paddlePlacement);
+			p.setY(getHeight()*6/7);
 			
 			b = new Ball();
 			add(b);

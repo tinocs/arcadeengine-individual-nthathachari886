@@ -41,7 +41,7 @@ public abstract class World extends javafx.scene.layout.Pane{
 				if(widthHasBeenSet && heightHasBeenSet && !initialized) {
 					initialized = true;
 					onDimensionsInitialized();
-					System.out.println("I GOT INITIALIZED!");
+					
 				}
 			}
 			
@@ -57,6 +57,7 @@ public abstract class World extends javafx.scene.layout.Pane{
 				if(widthHasBeenSet && heightHasBeenSet && !initialized) {
 					initialized = true;
 					onDimensionsInitialized();
+					
 					
 				}
 			}
