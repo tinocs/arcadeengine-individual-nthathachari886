@@ -4,10 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+import engine.Actor;
 import engine.Sound;
 import engine.World;
 import javafx.event.EventHandler;
+import javafx.geometry.Side;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -32,6 +40,9 @@ public class BallWorld extends World{
 	
 	Sound gameLost = new Sound("/breakoutresources/game_lost.wav");
 	Sound gameWon = new Sound("/breakoutresources/game_won.wav");
+	
+	String path = getClass().getClassLoader().getResource("breakoutresources/background.png").toString();
+	Image img = new Image (path);
 	
 	
 	public BallWorld(Stage s) {
@@ -102,6 +113,7 @@ public class BallWorld extends World{
 		
 		setLevel(getLevel());
 		
+		/*
 		this.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -114,6 +126,7 @@ public class BallWorld extends World{
 				}
 			}
 		});
+		*/
 		
 		//setLevel(getLevel());
 		
@@ -171,6 +184,12 @@ public class BallWorld extends World{
 			stage.setHeight(ORIGINAL_HEIGHT);
 			stage.setWidth(ORIGINAL_WIDTH);
 			
+			//setImage(img);
+			BackgroundPosition initPos = new BackgroundPosition(Side.LEFT, - img.getWidth()/2 + getWidth()/2, false, Side.TOP, 0, false);
+			BackgroundImage bg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, initPos, BackgroundSize.DEFAULT);
+			this.setBackground(new Background(bg));
+			
+			
 			p = new Paddle();
 			add(p);
 			p.setX(getWidth()/2);
@@ -186,11 +205,32 @@ public class BallWorld extends World{
 			
 			sc.close();
 			
-			
 		}catch(IOException e) {
 			System.out.println("ERROR: "+e.getMessage());
 		}
 	}
+	
+	public void scroll(double dx) {
+		// For now, only move the background by the OPPOSITE of dx.
+		// For example, if dx was 5 then you would move the background by -5.
+		
+		double xPos = this.getBackground().getImages().get(0).getPosition().getHorizontalPosition();
+		System.out.println(xPos);
+		if(xPos-dx <0 && xPos> -img.getWidth()+getWidth()+dx) {
+			//setImage(img);
+			BackgroundPosition initPos = new BackgroundPosition(Side.LEFT, this.getBackground().getImages().get(0).getPosition().getHorizontalPosition() -dx, false, Side.TOP, 0, false);
+			BackgroundImage bg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, initPos, BackgroundSize.DEFAULT);
+			this.setBackground(new Background(bg));
+			
+			for(int i=0; i<getObjects(Actor.class).size(); i++) {
+				Actor a = getObjects(Actor.class).get(i);
+				a.setX(a.getX()-dx);
+			}
+		}
+	
+		
+	}
+
 	
 	public Score getScore() {
 		return score;
